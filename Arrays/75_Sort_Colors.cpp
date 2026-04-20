@@ -6,13 +6,14 @@ We will use the integers 0, 1, and 2 to represent the color red, white, and blue
 
 You must solve this problem without using the library's sort function.
 
- 
 
 Example 1:
 
 Input: nums = [2,0,2,1,1,0]
 Output: [0,0,1,1,2,2]
 */
+
+// Algorithm Used: Dutch National Flag Algorithm (3-Pointers)
 
 #include <vector>
 #include <algorithm>
@@ -24,18 +25,21 @@ using namespace std;
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-    int low = 0, mid = 0, high = nums.size()-1;
+    int low = 0, mid = 0, high = nums.size() - 1;
     while (mid <= high){
         if (nums[mid] == 0){
-            swap(nums[low],nums[mid]);
+            // 0s belong to the left side
+            swap(nums[low], nums[mid]);
             low++;
             mid++;
         }
         else if (nums[mid] == 1){
+            // 1s belong in the middle, just skip over them
             mid++;
         }
         else {
-            swap(nums[mid],nums[high]);
+            // 2s belong on the right side
+            swap(nums[mid], nums[high]);
             high--;
         }
     }   
