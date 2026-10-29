@@ -16,23 +16,40 @@ public:
         int m = matrix.size();    // m = rows
         int n = matrix[0].size(); // n = columns
         
-        vector<int> row(m, 0);
-        vector<int> column(n, 0);
-        
+        int col = 1;
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
                 if(matrix[i][j] == 0){
-                    row[i] = 1;
-                    column[j] = 1;
+                    // 0th Row and Column is utilised
+                    matrix[i][0] = 0;
+                    if(j != 0){
+                        matrix[0][j] = 0;
+                    }
+                    else{
+                        col = 0;
+                    }
                 }
             }
         }
-        
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                if((row[i] == 1) || (column[j] == 1)){
-                    matrix[i][j] = 0;
+        // First working on Setting inner side of the matrix to zero
+        for(int i = 1; i < m; i++){
+            for(int j = 1; j < n; j++){
+                if(matrix[i][j] != 0){
+                    if((matrix[i][0] == 0) || (matrix[0][j] == 0)){
+                        matrix[i][j] = 0;
+                    }
                 } 
+            }
+        }
+        // Now on 0th Row and Column
+        if(matrix[0][0] == 0){
+            for(int i = 1; i < n; i++){
+                matrix[0][i] = 0;
+            }
+        }
+        if(col == 0){
+            for(int i = 1; i < m; i++){
+                matrix[i][0] = 0;
             }
         }
     }
