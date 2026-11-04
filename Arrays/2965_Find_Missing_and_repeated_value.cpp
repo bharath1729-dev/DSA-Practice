@@ -27,23 +27,22 @@ class Solution {
 public:
     vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
         int n = grid.size();
+        long long N = n*n;
         int repeat = 0;
         int missing = 0;
-        vector<int> line((n*n)+1,0);
+        long long SSum = 0;
+        long long SSact = ((N)*(N+1)*((2*N)+1)/6);
+        long long Sum = 0;
+        long long Sact = ((N)*(N+1))/2;
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
-                line[grid[i][j]]++;
+                Sum += grid[i][j];
+                SSum += (grid[i][j] * grid[i][j]);
             }
         }
-        n = n*n;
-        for(int i = 1; i <= n; i++){
-            if(line[i] == 2){
-                repeat = i;
-            }
-            else if(line[i] == 0){
-                missing = i;
-            }
-        }
+        int ab = ((SSum - SSact)/(Sum - Sact));
+        repeat = (ab + Sum - Sact)/2;
+        missing = (Sact - Sum + ab)/2;
         return {repeat, missing};
     }
 };
